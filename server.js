@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3001', // Frontend URL
+    origin: 'https://aikisokdemo-qn63.vercel.app', // Allow requests from your hosted frontend
     methods: ['GET', 'POST'],
     credentials: true,
   },
