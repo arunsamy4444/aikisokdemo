@@ -20,9 +20,10 @@ const io = new Server(server, {
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3001',
+  origin: 'https://aikisokdemo.vercel.app', // Update this to your actual frontend URL
   credentials: true,
 }));
+
 
 // MongoDB Schema Definitions
 const userSchema = new mongoose.Schema({
