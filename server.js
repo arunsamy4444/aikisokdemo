@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'https://aikisokdemo-qn63.vercel.app', // Allow requests from your hosted frontend
+    origin: 'https://aikisokdemo-5jcs.vercel.app/', // Allow requests from your hosted frontend
     methods: ['GET', 'POST'],
     credentials: true,
   },
