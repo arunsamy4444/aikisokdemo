@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'https://aikisokdemo.vercel.app', // Allow requests from your hosted frontend
+    origin: process.env.CORS_ORIGIN || 'https://aikisokdemo.vercel.app',
     methods: ['GET', 'POST'],
     credentials: true,
   },
@@ -19,10 +19,13 @@ const io = new Server(server, {
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-  origin: 'https://aikisokdemo.vercel.app', // Update this to your actual frontend URL
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || 'https://aikisokdemo.vercel.app',
+    credentials: true,
+  })
+);
+
 
 
 // MongoDB Schema Definitions
