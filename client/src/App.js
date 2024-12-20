@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import './App.css';
@@ -32,7 +33,11 @@ const App = () => {
     utterance.lang = "ta-IN"; // Change to "en-US" for English
     window.speechSynthesis.speak(utterance);
   };
+  // useEffect(() => {
+  //   speak("This is a test of the speech synthesis.");
+  // }, []);
   
+
   useEffect(() => {
     if (!userId) {
       const instructions = [
@@ -59,7 +64,6 @@ const App = () => {
       });
     }
   }, [userId]);
-
   
   useEffect(() => {
     socket.on('connect', () => {
@@ -87,7 +91,6 @@ const App = () => {
       socket.off('candidate');
     };
   }, [localStream, peerConnection]);
-  
 
   useEffect(() => {
     if (userId) {
@@ -161,32 +164,7 @@ const App = () => {
     setFilteredUsers(filtered);
   };
 
-  const sendRequest = async (recipientId) => {
-    if (!userId) {
-      alert('Please log in to send a request.');
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/send-request`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senderId: userId, recipientId }),
-      });
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send request.');
-      }
-
-      alert('Request sent successfully.');
-    } catch (error) {
-      alert(error.message);
-      console.error('Failed to send request:', error.message);
-    }
-  };
-
-   const joinRoom = () => {
+  const joinRoom = () => {
     if (!roomId) {
       alert('No room ID provided.');
       speak("Room ID not entered. Please enter a valid Room ID.");
@@ -197,7 +175,7 @@ const App = () => {
     speak("You have successfully joined the room. Now, press Start Call to begin.");
     startCall(); // Automatically starting the call after joining the room
   };
-
+  
   const startCall = async () => {
     try {
       const localStream = await navigator.mediaDevices.getUserMedia({
@@ -314,6 +292,32 @@ const App = () => {
     }
   };
 
+  const sendRequest = async (recipientId) => {
+    if (!userId) {
+      alert('Please log in to send a request.');
+      return;
+    }
+  
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/send-request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senderId: userId, recipientId }),
+      });
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send request.');
+      }
+  
+      alert('Request sent successfully.');
+    } catch (error) {
+      alert(error.message);
+      console.error('Failed to send request:', error.message);
+    }
+  };
+  
+
   return (
     <div className="app-container">
       <h1 className="app-header">Video Call App</h1>
@@ -396,3 +400,4 @@ const App = () => {
 };
 
 export default App;
+
